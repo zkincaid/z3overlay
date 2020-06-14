@@ -197,16 +197,17 @@ module Make (C : Context) = struct
   (** {2 Optimizing solver calls} *)
   module Optimize = struct
 
-    type objective = Z3.Optimize.objective
+    type objective = Z3.Optimize.handle
 
     let make () =
-      Z3.Optimize.mk_optimize ctx
+      Z3.Optimize.mk_opt ctx
 
     let add ~solver x =
       Z3.Optimize.add solver [T.raw x]
 
     let add_soft ?id ~solver ~weight x =
-      ignore(Z3.Optimize.add_soft ?id solver weight (T.raw x))
+      let id = match id with None -> assert false | Some x -> x in
+      ignore(Z3.Optimize.add_soft solver (T.raw x) weight id)
 
     let minimize ~solver x =
       Z3.Optimize.minimize solver x
@@ -215,10 +216,10 @@ module Make (C : Context) = struct
       Z3.Optimize.maximize solver x
 
     let get_upper ~solver x =
-      Symbol.term Num (Z3.Optimize.get_upper solver x)
+      Symbol.term Num (Z3.Optimize.get_upper x)
 
     let get_lower ~solver x =
-      Symbol.term Num (Z3.Optimize.get_lower solver x)
+      Symbol.term Num (Z3.Optimize.get_lower x)
 
     let check ~solver =
       let open Z3.Optimize in

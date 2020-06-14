@@ -11,11 +11,11 @@ BuildTools: ocamlbuild
 ## Improvements ##
 
 # A well-typed ast, with conversion functions #
-Library Z3overlay
+Library z3overlay
   Path: src
   InternalModules: ZZ3Utils
   Modules: ZZ3, ZZ3_sigs
-  BuildDepends: Z3, zarith
+  BuildDepends: z3, zarith
   CompiledObject: best
 
 ## Tests ##
@@ -25,7 +25,7 @@ Executable test_simple
   Build$: flag(tests)
   Install: false
   MainIs: simple.ml
-  BuildDepends: Z3overlay
+  BuildDepends: z3overlay
   CompiledObject: native
 
 Test simple
@@ -38,7 +38,7 @@ Executable test_optim
   Build$: flag(tests)
   Install: false
   MainIs: optim.ml
-  BuildDepends: Z3overlay
+  BuildDepends: z3overlay
   CompiledObject: native
 
 Test optim
@@ -54,6 +54,6 @@ Document api
   Type: ocamlbuild (0.3)
   BuildTools: ocamldoc
   XOCamlbuildPath: .
-  XOCamlbuildLibraries: Z3overlay
+  XOCamlbuildLibraries: z3overlay
   XOCamlbuildExtraArgs:
     "-docflags '-colorize-code -short-functors -charset utf-8'"
